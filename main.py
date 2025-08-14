@@ -24,6 +24,7 @@ class MyWindow(QMainWindow):
 
         id_like = distro.like().lower()
         name = distro.id().lower()
+        self.distro1 = 0
 
         if "debian" in id_like or "ubuntu" in name:
             print("This is a Debian-based distro")
@@ -33,6 +34,7 @@ class MyWindow(QMainWindow):
         elif "rhel" in id_like or "fedora" in name or "centos" in name:
             print("This is a Red Hat-based distro")
             self.distro = "redhat"
+            self.distro1 = 1
             self.redhatbased.setChecked(True)
             self.currentdistro.setText("Detected distro: RedHat based")
         elif "arch" in id_like or "arch" in name:
@@ -50,6 +52,9 @@ class MyWindow(QMainWindow):
         self.spotify_install.clicked.connect(lambda: spotify_installer(self.distro))
         self.discord_install.clicked.connect(lambda: discord_installer(self.distro))
         self.davinci_install.clicked.connect(lambda: davinci_installer(self.distro))
+        self.fedora_codecs.clicked.connect(lambda: fedora_codecs(self.distro1))
+        self.rustdesk_install.clicked.connect(lambda: rustdesk_installer(self.distro))
+        self.steam_install.clicked.connect(lambda: steam_installer(self.distro))
 
         self.archbased.toggled.connect(self.radio_arch)
         self.debianbased.toggled.connect(self.radio_debian)
