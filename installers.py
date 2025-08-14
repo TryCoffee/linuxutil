@@ -5,19 +5,19 @@ def brave_installer(distro):
     print("Brave installer")
     match distro:
         case "arch":
-            answer = ask_native_or_flatpak("AUR", "Flatpak", "Brave_Installer", "Do you want to install Brave from AUR (prefered) or Flatpak?")
+            answer = ask_native_or_flatpak("AUR", "Flatpak", "Brave Installer", "Do you want to install Brave from AUR (prefered) or Flatpak?")
             if answer == "AUR":
                 if yay_installed():
                     try:
                         command = "yay -Sy brave-bin"
                         subprocess.run(['konsole', '-e', f'bash -c "{command} && exit"'])
                         print("Installation succeeded")
-                        show_info("Spotify_Installer", "Installation succeeded. Now you can close terminal.")
+                        show_info("Brave Installer", "Installation succeeded. Now you can close terminal.")
                     except subprocess.CalledProcessError:
                         print("Installation failed")
                 else:
                     print("You need to install yay before installation!")
-                    show_info("Spotify_Installer", "You need to install yay before installation!")
+                    show_info("Brave Installer", "You need to install yay before installation!")
 
             elif answer == "Flatpak":
                 if flatpak_installed():
@@ -25,11 +25,11 @@ def brave_installer(distro):
                         command = "flatpak install -y flathub com.brave.Browser"
                         subprocess.run(['konsole', '-e', f'bash -c "{command} && exit"'])
                         print("Installation succeeded")
-                        show_info("Spotify_Installer", "Installation succeeded. Now you can close terminal.")
+                        show_info("Brave Installer", "Installation succeeded. Now you can close terminal.")
                     except subprocess.CalledProcessError:
                         print("Installation failed")
                 else:
-                    show_info("Brave_Installer", "Please, install flatpak first")
+                    show_info("Brave Installer", "Please, install flatpak first")
             else:
                 print("Aborting install...")
 
@@ -41,7 +41,7 @@ def brave_installer(distro):
                         command = "sudo curl -fsSLo /usr/share/keyrings/brave-browser-archive-keyring.gpg https://brave-browser-apt-release.s3.brave.com/brave-browser-archive-keyring.gpg && sudo curl -fsSLo /etc/apt/sources.list.d/brave-browser-release.sources https://brave-browser-apt-release.s3.brave.com/brave-browser.sources && sudo apt update && sudo apt install brave-browser"
                         subprocess.run(['konsole', '-e', f'bash -c "{command} && exit"'])
                         print("Installation succeeded")
-                        show_info("Spotify_Installer", "Installation succeeded.")
+                        show_info("Brave Installer", "Installation succeeded.")
                     except subprocess.CalledProcessError:
                         print("Installation failed")
                 else:
@@ -160,7 +160,7 @@ def discord_installer(distro):
                 command = "sudo pacman -S discord"
                 subprocess.run(['konsole', '-e', f'bash -c "{command} && exit"'])
                 print("Installation succeeded")
-                show_info("Spotify_Installer", "Installation succeeded. Now you can close terminal.")
+                show_info("Discord Installer", "Installation succeeded. Now you can close terminal.")
             except subprocess.CalledProcessError:
                 print("Installation failed")
         case "debian":
@@ -206,18 +206,17 @@ def davinci_installer(distro):
     match distro:
         case _:
             if ask_confirmation("DaVinci Resolve Installer", "Normally you would need to download DaVinci Resolve from website, repack and then install. Program can be downloaded from my local server and then installed. Do you want to continue?"):
-                show_info("DaVinci Resolve Studio Installer", "Could not connect to server!")
-            #     command = "wget -O /tmp/davinci_resolve.run"
-            #     subprocess.run(['konsole', '-e', f'bash -c "{command} && exit"'])
-            #     subprocess.run("notify-send 'DaVinci Resolve successfully downloaded!'", shell=True, check=True)
-            #     command = "SKIP_PACKAGE_CHECK=1 /tmp/davinci_resolve.run"
-            #     subprocess.run(['konsole', '-e', f'bash -c "{command} && exit"'])
-            #     if ask_confirmation("DaVinci Resolve Installer", "Do you want to delete installer now?"):
-            #         subprocess.run('rm /tmp/davinci_resolve.run',shell=True, check=True)
-            #     else:
-            #         print("Leaving installer in /tmp")
-            # else:
-            #     print("Aborting install...")
+                command = "wget http://integra.fun/api/public/dl/gsC2gYMz -O /tmp/davinci_resolve.run"
+                subprocess.run(['konsole', '-e', f'bash -c "{command} && exit"'])
+                subprocess.run("notify-send 'DaVinci Resolve successfully downloaded!'", shell=True, check=True)
+                command = "SKIP_PACKAGE_CHECK=1 /tmp/davinci_resolve.run"
+                subprocess.run(['konsole', '-e', f'bash -c "{command} && exit"'])
+                if ask_confirmation("DaVinci Resolve Installer", "Do you want to delete installer now?"):
+                    subprocess.run('rm /tmp/davinci_resolve.run',shell=True, check=True)
+                else:
+                    print("Leaving installer in /tmp")
+            else:
+                print("Aborting install...")
 
 def fedora_codecs(distro):
     print("Fedora Codecs")
