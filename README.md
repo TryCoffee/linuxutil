@@ -31,6 +31,7 @@ It allows you to **install popular software**, perform **system tweaks**, and en
 ## 📷 Screenshots
 
 <img width="1161" height="832" alt="image" src="https://github.com/user-attachments/assets/056e3f08-e1e9-472f-a9e3-7317f1b24f1b" />
+<img width="1099" height="814" alt="image" src="https://github.com/user-attachments/assets/d1f3613a-5b8f-4bed-9c1d-38115e267879" />
 
 
 ---
