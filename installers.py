@@ -206,17 +206,18 @@ def davinci_installer(distro):
     match distro:
         case _:
             if ask_confirmation("DaVinci Resolve Installer", "Normally you would need to download DaVinci Resolve from website, repack and then install. Program can be downloaded from my local server and then installed. Do you want to continue?"):
-                command = "wget http://integra.fun/api/public/dl/gsC2gYMz -O /tmp/davinci_resolve.run"
-                subprocess.run(['konsole', '-e', f'bash -c "{command} && exit"'])
-                subprocess.run("notify-send 'DaVinci Resolve successfully downloaded!'", shell=True, check=True)
-                command = "SKIP_PACKAGE_CHECK=1 /tmp/davinci_resolve.run"
-                subprocess.run(['konsole', '-e', f'bash -c "{command} && exit"'])
-                if ask_confirmation("DaVinci Resolve Installer", "Do you want to delete installer now?"):
-                    subprocess.run('rm /tmp/davinci_resolve.run',shell=True, check=True)
-                else:
-                    print("Leaving installer in /tmp")
-            else:
-                print("Aborting install...")
+                show_info("DaVinci Resolve Installer", "Could not connect to server!")
+            #     command = "wget -O /tmp/davinci_resolve.run"
+            #     subprocess.run(['konsole', '-e', f'bash -c "{command} && exit"'])
+            #     subprocess.run("notify-send 'DaVinci Resolve successfully downloaded!'", shell=True, check=True)
+            #     command = "SKIP_PACKAGE_CHECK=1 /tmp/davinci_resolve.run"
+            #     subprocess.run(['konsole', '-e', f'bash -c "{command} && exit"'])
+            #     if ask_confirmation("DaVinci Resolve Installer", "Do you want to delete installer now?"):
+            #         subprocess.run('rm /tmp/davinci_resolve.run',shell=True, check=True)
+            #     else:
+            #         print("Leaving installer in /tmp")
+            # else:
+            #     print("Aborting install...")
 
 def fedora_codecs(distro):
     print("Fedora Codecs")
