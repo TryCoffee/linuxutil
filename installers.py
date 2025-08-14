@@ -1,5 +1,4 @@
 import subprocess
-
 from popups import *
 
 def brave_installer(distro):
@@ -189,24 +188,153 @@ def discord_installer(distro):
             except subprocess.CalledProcessError:
                 print("Installation failed")
 
+        case "flatpak":
+            if flatpak_installed():
+                command = "flatpak install -y flathub com.discordapp.Discord"
+                message = 'Press any key to close this window...'
+
+                subprocess.run([
+                    'konsole',
+                    '-e',
+                    f'bash -c "{command}; echo \'{message}\'; read -n 1 -s; exit"'
+                ])
+            else:
+                print("Flatpak not installed")
 
 def davinci_installer(distro):
-    print("DaVinci Resolve Installer")
+    print("DaVinci Resolve Studio Installer")
     match distro:
         case _:
             if ask_confirmation("DaVinci Resolve Installer", "Normally you would need to download DaVinci Resolve from website, repack and then install. Program can be downloaded from my local server and then installed. Do you want to continue?"):
-                showinfo("DaVinci Resolve Installer", "Couldn't connect to server!")
-                # command = "wget-O /tmp/davinci_resolve.run"
-                # subprocess.run(['konsole', '-e', f'bash -c "{command} && exit"'])
-                # subprocess.run("notify-send 'DaVinci Resolve successfully downloaded!'", shell=True, check=True)
-                # command = "SKIP_PACKAGE_CHECK=1 /tmp/davinci_resolve.run"
-                # subprocess.run(['konsole', '-e', f'bash -c "{command} && exit"'])
-                # if ask_confirmation("DaVinci Resolve Installer", "Do you want to delete installer now?"):
-                #     subprocess.run('rm /tmp/davinci_resolve.run',shell=True, check=True)
-                # else:
-                #     print("Leaving installer in /tmp")
+                show_info("DaVinci Resolve Studio Installer", "Could not connect to server!")
+            #     command = "wget -O /tmp/davinci_resolve.run"
+            #     subprocess.run(['konsole', '-e', f'bash -c "{command} && exit"'])
+            #     subprocess.run("notify-send 'DaVinci Resolve successfully downloaded!'", shell=True, check=True)
+            #     command = "SKIP_PACKAGE_CHECK=1 /tmp/davinci_resolve.run"
+            #     subprocess.run(['konsole', '-e', f'bash -c "{command} && exit"'])
+            #     if ask_confirmation("DaVinci Resolve Installer", "Do you want to delete installer now?"):
+            #         subprocess.run('rm /tmp/davinci_resolve.run',shell=True, check=True)
+            #     else:
+            #         print("Leaving installer in /tmp")
+            # else:
+            #     print("Aborting install...")
 
+def fedora_codecs(distro):
+    print("Fedora Codecs")
+    print("Make sure fusion repository is enabled!")
+    if distro == 0:
+        if ask_confirmation("Fedora Codecs Installer", "Are you sure that you are on fedora?"):
+            command = "sudo dnf swap ffmpeg-free ffmpeg --allowerasing -y"
+            message = 'Press any key to close this window...'
 
+            subprocess.run([
+                'konsole',
+                '-e',
+                f'bash -c "{command}; echo \'{message}\'; read -n 1 -s; exit"'
+            ])
+
+    else:
+        command = "sudo dnf swap ffmpeg-free ffmpeg --allowerasing -y"
+        message = 'Press any key to close this window...'
+
+        subprocess.run([
+            'konsole',
+            '-e',
+            f'bash -c "{command}; echo \'{message}\'; read -n 1 -s; exit"'
+        ])
+
+def rustdesk_installer(distro):
+    print("RustDesk Installer")
+    match distro:
+        case "arch":
+            show_info("RustDesk Installer", "Installer is going to download latest tar.gz package and install it. Continue?")
+            command = "sudo pacman -Sy wget && wget https://github.com/rustdesk/rustdesk/releases/download/1.4.1/rustdesk-1.4.1-0-x86_64.pkg.tar.zst -O /tmp/rustdesk-1.4.1-0-x86_64.pkg.tar.zst && sudo pacman -U /tmp/rustdesk-1.4.1-0-x86_64.pkg.tar.zst"
+            message = 'Press any key to close this window...'
+
+            subprocess.run([
+                'konsole',
+                '-e',
+                f'bash -c "{command}; echo \'{message}\'; read -n 1 -s; exit"'
+            ])
+
+        case "debian":
+            show_info("RustDesk Installer", "Installer is going to download latest debian package and install it. Continue?")
+            command = "wget https://github.com/rustdesk/rustdesk/releases/download/1.4.1/rustdesk-1.4.1-x86_64.deb -O /tmp/rustdesk-1.4.1-0-x86_64.pkg.tar.zst && sudo apt install /tmp/rustdesk-1.4.1-x86_64.deb"
+            message = 'Press any key to close this window...'
+
+            subprocess.run([
+                'konsole',
+                '-e',
+                f'bash -c "{command}; echo \'{message}\'; read -n 1 -s; exit"'
+            ])
+
+        case "redhat":
+            show_info("RustDesk Installer", "Installer is going to download latest RPM package and install it. Continue?")
+            command = "wget https://github.com/rustdesk/rustdesk/releases/download/1.4.1/rustdesk-1.4.1-0.x86_64.rpm -O /tmp/rustdesk-1.4.1-0.x86_64.rpm && sudo dnf install /tmp/rustdesk-1.4.1-0.x86_64.rpm"
+            message = 'Press any key to close this window...'
+
+            subprocess.run([
+                'konsole',
+                '-e',
+                f'bash -c "{command}; echo \'{message}\'; read -n 1 -s; exit"'
+            ])
+
+        case "flatpak":
+            if flatpak_installed():
+                show_info("RustDesk Installer", "Continue?")
+                command = "flatpak install -y flathub com.discordapp.Discord"
+                message = 'Press any key to close this window...'
+
+                subprocess.run([
+                    'konsole',
+                    '-e',
+                    f'bash -c "{command}; echo \'{message}\'; read -n 1 -s; exit"'
+                ])
+            else:
+                print("Flatpak not installed")
+
+def steam_installer(distro):
+    print("Steam Installer")
+    match distro:
+        case "arch":
+            command = "sudo pacman -S steam"
+            message = 'Press any key to close this window...'
+
+            subprocess.run([
+                'konsole',
+                '-e',
+                f'bash -c "{command}; echo \'{message}\'; read -n 1 -s; exit"'
+            ])
+        case "debian":
+            command = "sudo apt install steam"
+            message = 'Press any key to close this window...'
+
+            subprocess.run([
+                'konsole',
+                '-e',
+                f'bash -c "{command}; echo \'{message}\'; read -n 1 -s; exit"'
+            ])
+        case "redhat":
+            command = "sudo dnf install steam"
+            message = 'Press any key to close this window...'
+
+            subprocess.run([
+                'konsole',
+                '-e',
+                f'bash -c "{command}; echo \'{message}\'; read -n 1 -s; exit"'
+            ])
+        case _:
+            if ask_confirmation("Steam Installer", "It is not recommended to install steam via flatpak. Are you sure you want to do that?"):
+                command = "flatpak install flathub com.valvesoftware.Steam"
+                message = 'Press any key to close this window...'
+
+                subprocess.run([
+                    'konsole',
+                    '-e',
+                    f'bash -c "{command}; echo \'{message}\'; read -n 1 -s; exit"'
+                ])
+            else:
+                print("Aborting install...")
 
 
 def flatpak_installed():
